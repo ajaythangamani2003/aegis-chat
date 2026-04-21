@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS — Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- ═══ LEFT SIDEBAR ═══ -->
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+            <div class="brand">AEGIS</div>
+            <div class="current-user-badge">
+                <div class="avatar-sm" id="selfAvatar">U</div>
+                <span id="currentUser">User</span>
+            </div>
+        </div>
+
+        <!-- ADMIN STATS BAR -->
+        <div id="statsBar" class="stats-bar" style="display:none;">
+            <div class="stat-item">
+                <span class="stat-num" id="statUsers">—</span>
+                <span class="stat-label">Users</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-num" id="statMsgs">—</span>
+                <span class="stat-label">Messages</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-num blocked" id="statBlocked">—</span>
+                <span class="stat-label">Blocked</span>
+            </div>
+        </div>
+
+        <div class="sidebar-actions">
+            <button id="adminBtn" class="admin-btn" onclick="loadAllMessages()">
+                🔑 All Conversations
+            </button>
+        </div>
+
+        <div class="sidebar-label">
+            <span id="listLabel">Messages</span>
+        </div>
+
+        <div id="chatList" class="chat-list">
+            <div class="no-chats">Loading...</div>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div id="onlineBar" class="online-bar"></div>
+            <button class="logout-btn" onclick="logout()">← Logout</button>
+        </div>
+
+    </aside>
+
+    <!-- ═══ MAIN AREA ═══ -->
+    <main class="main-area">
+
+        <!-- EMPTY STATE -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">💬</div>
+            <div class="empty-title">Select a conversation</div>
+            <div class="empty-sub">Choose someone from the left to start chatting</div>
+        </div>
+
+        <!-- CHAT AREA -->
+        <div class="chat-area" id="chatArea" style="display:none;">
+
+            <!-- 🔥 UPDATED HEADER -->
+            <div class="chat-top-bar">
+
+                <div class="chat-top-info">
+                    <div class="avatar-md" id="receiverAvatar">?</div>
+                    <div>
+                        <div class="chat-top-name" id="chatWith">—</div>
+
+                        <!-- ✅ USER STATUS -->
+                        <div id="userStatus" class="user-status-label">✅ Active</div>
+
+                        <!-- typing -->
+                        <div id="typingIndicator" class="typing-indicator" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- 🔥 BLOCK BUTTON -->
+                <button id="blockBtn"
+                        class="block-btn block"
+                        onclick="toggleBlockCurrentUser()">
+                    🚫 Block User
+                </button>
+
+                <!-- 🔥 BLOCK BADGE -->
+                <div id="blockedBadge" class="blocked-badge" style="display:none;">
+                    🚫 User is Blocked
+                </div>
+
+            </div>
+
+            <ul id="messages" class="messages-list"></ul>
+
+            <div class="input-area">
+                <input type="hidden" id="receiver">
+
+                <input
+                        type="text"
+                        id="content"
+                        class="msg-input"
+                        placeholder="Type a message..."
+                        onkeydown="handleEnter(event)"
+                        oninput="onTyping()"
+                        autocomplete="off"
+                >
+
+                <button id="broadcastBtn" onclick="sendBroadcast()" class="broadcast-btn">📢</button>
+
+                <button class="send-btn" onclick="sendMessage()">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- ADMIN PANEL -->
+        <div class="admin-panel" id="adminPanel" style="display:none;"></div>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
