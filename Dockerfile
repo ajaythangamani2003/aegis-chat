@@ -6,7 +6,7 @@ COPY . .
 
 RUN chmod +x mvnw
 
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests -Dspring-boot.run.skip=true
 
 EXPOSE 8080
 
