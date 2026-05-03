@@ -1,19 +1,12 @@
-FROM eclipse-temurin:21-jdk-jammy AS build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+COPY . .
 
-RUN chmod +x mvnw
+RUN mvn clean package -DskipTests
 
-RUN ./mvnw dependency:go-offline -U
-
-COPY src ./src
-
-RUN ./mvnw clean package -DskipTests
-
-FROM eclipse-temurin:21-jre-jammy
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
@@ -21,4 +14,4 @@ COPY --from=build /app/target/project-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
