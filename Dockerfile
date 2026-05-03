@@ -6,12 +6,12 @@ COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
 RUN chmod +x mvnw
-RUN ./mvnw dependency:go-offline
+
+RUN ./mvnw dependency:go-offline -U
 
 COPY src ./src
 
-RUN ./mvnw clean package -DskipTests \
-    -Dspring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:21-jre-jammy
 
