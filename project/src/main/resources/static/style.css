@@ -1244,3 +1244,96 @@ li.received .bubble {
     box-shadow: 0 0 18px rgba(245,158,11,0.3);
     transform: scale(1.05);
 }
+
+@media screen and (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .app-shell {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .main-area {
+        width: 100%;
+        height: calc(100vh - 320px);
+    }
+
+    .chat-top-bar {
+        padding: 12px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .messages-list {
+        padding: 14px;
+    }
+
+    .bubble {
+        max-width: 90%;
+    }
+
+    .input-area {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .msg-input {
+        font-size: 16px;
+    }
+
+    .send-btn,
+    .broadcast-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    .glass {
+        width: 92%;
+        padding: 24px 20px;
+        margin: 20px;
+    }
+
+    .glass h3 {
+        font-size: 20px;
+    }
+
+    .form-control {
+        font-size: 16px;
+    }
+
+    .admin-conversations {
+        padding: 12px;
+    }
+
+    .admin-msg-list li {
+        font-size: 13px;
+    }
+
+    .chat-top-name {
+        font-size: 14px;
+    }
+
+    .sidebar-top {
+        padding: 18px 16px;
+    }
+
+    .sidebar-actions,
+    .sidebar-bottom {
+        padding: 12px 16px;
+    }
+
+    .chat-user {
+        padding: 12px 14px;
+    }
+}
